@@ -7,6 +7,6 @@ Guillaume Bellec*, Shuqi Wang*, Alireza Modirshanechi, Johanni Brea^, Wulfram Ge
 
 
 Accepted for publication at the NeurIPS conference 2021  
+(*= equal contributions, ^ = senior authors)  
 [arxiv](https://arxiv.org/abs/2106.10064)  
-(*= equal contributions, ^ = senior authors)
 
