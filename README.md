@@ -2,7 +2,7 @@
 
 This is the official repository for the sample-and-measure code of the paper:
 
-<font size=2>
+<font size=5>
 Fitting summary statistics of neural data with a differentiable spiking network simulator  
 Guillaume Bellec*, Shuqi Wang*, Alireza Modirshanechi, Johanni Brea^, Wulfram Gerstner^
 </font>
