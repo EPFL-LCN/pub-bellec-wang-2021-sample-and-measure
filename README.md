@@ -14,5 +14,5 @@ Accepted for publication at the NeurIPS conference 2021
 
 ## Execution example
 
-`python train.py --SEED=4 --ground_truth=no  --GPU=no --hidden_output_neuron=200`
+`python train.py --SEED=4 --ground_truth=no  --GPU=yes --hidden_output_neuron=200`
 

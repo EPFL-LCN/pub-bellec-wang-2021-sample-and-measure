@@ -34,7 +34,7 @@ def mansavefig(avgbatchlist, evallist, step, savename_trainingcurve):
 	plt.ioff()
 	
 	# minindex = 0
-	minindex = np.argmin(np.asarray(avgbatchlist))
+	minindex = np.argmin(np.asarray(evallist))
 	xrange = max(step)
     
 	textx = 100 + xrange/8
@@ -52,7 +52,7 @@ def mansavefig(avgbatchlist, evallist, step, savename_trainingcurve):
 	axA.axvline(x=step[minindex], ymin=-.1, ymax = 2, linewidth=2, color='r')
 	axA.set_ylabel('cross entropy loss', color='r')
 	axA.tick_params('y', colors='r')
-	axA.annotate('Step: %d, train: %.4f' % (step[minindex], avgbatchlist[minindex]), xy=(textx, 1.0*deltay+ymin))
+	axA.annotate('Step: %d, train: %.4f, eval: %.4f' % (step[minindex], avgbatchlist[minindex], evallist[minindex]), xy=(textx, 1.0*deltay+ymin))
 	plt.legend(loc=3)
 	axB = axA.twinx()
 	axB.plot(np.asarray(step), np.asarray(evallist), 'k--', label='validation loss')

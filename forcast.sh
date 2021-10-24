@@ -1,3 +1,3 @@
-python forcast.py --ground_truth=no --SEED=4 --IDtag=1634498377
+python forcast.py --SEED=4 --ground_truth=no  --GPU=no --IDtag=1635102937
 
 # chmod u+x  forcast.sh
