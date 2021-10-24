@@ -8,3 +8,11 @@ Accepted for publication at the NeurIPS conference 2021
 (*= equal contributions, ^ = senior authors)  
 [arxiv](https://arxiv.org/abs/2106.10064)  
 
+## Environment
+
+`pip install -r requirements.txt`
+
+## Execution example
+
+`python train.py --SEED=4 --ground_truth=no  --GPU=no --hidden_output_neuron=200`
+

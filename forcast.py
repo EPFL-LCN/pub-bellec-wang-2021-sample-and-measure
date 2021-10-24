@@ -1,0 +1,76 @@
+
+import tensorflow as tf
+import numpy as np
+import random
+from scipy.stats import pearsonr
+
+import os, sys, time
+import pdb
+
+
+from src.utils import DataLoader
+from src.parser import gen_parser
+from src.forcast_helper import *
+
+
+import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+import seaborn as sns
+
+
+try:
+    # Disable all GPUS
+    tf.config.set_visible_devices([], 'GPU')
+    visible_devices = tf.config.get_visible_devices()
+    for device in visible_devices:
+        assert device.device_type != 'GPU'
+except:
+    # Invalid device or cannot modify virtual devices once initialized.
+    # pass
+    print('not able to disable GPU')
+
+
+
+FLAGS = None
+parser = gen_parser()
+FLAGS, unparsed = parser.parse_known_args()
+
+
+'''
+Load Data
+'''
+data_dir = FLAGS.data_dir
+train_filename = ['M_train(last)_natural.npy', 'S_1_train(last)_natural_first80.npy']
+eval_filename = ['M_train(last)_natural.npy', 'S_1_train(last)_natural_mid30.npy']
+
+data = DataLoader(data_dir, train_filename, eval_filename, FLAGS) # loads and formats all the data
+
+
+
+IDtag = FLAGS.IDtag
+mansave_dir = os.path.join(FLAGS.save_dir, str(IDtag)+f'_{FLAGS.ground_truth}_{FLAGS.SEED}/')  # the directory to save to
+print("manual save dir: " + mansave_dir)
+savename_network = mansave_dir + 'network_manualsave_' + IDtag # saving network parameters
+savename_nogttrainresults = mansave_dir + 'training_results_nogt' + IDtag
+savename_nogtevalresults = mansave_dir + 'val_results_nogt' + IDtag
+
+
+
+'''
+simulate on the training set
+'''
+
+FLAGS.ground_truth = False
+inputnet, rnn = recover_rnn_and_cnn(mansave_dir, savename_network, data.numcell, data.numpixx, data.numpixy, FLAGS)
+gtact_train, predact_train, predfr_train, _ = forecast_on_gt(data, FLAGS, inputnet, rnn, train=True, eval=False)  # nrep, ncell, nframe
+
+np.save(savename_nogttrainresults, [predact_train, predfr_train])
+
+
+'''
+simulate on the test set
+'''
+gtact_eval, predact_eval, predfr_eval, _ = forecast_on_gt(data, FLAGS, inputnet, rnn, train=False, eval=True)  # nrep, ncell, nframe
+
+np.save(savename_nogtevalresults, [predact_eval, predfr_eval])
+
