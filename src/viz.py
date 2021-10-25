@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from six.moves import xrange  
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 
 def viz_raster_plot(act, ax, args, nframefirst=True):
