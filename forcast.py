@@ -55,13 +55,11 @@ savename_nogttrainresults = mansave_dir + 'training_results_nogt' + IDtag
 savename_nogtevalresults = mansave_dir + 'val_results_nogt' + IDtag
 
 
-
+inputnet, rnn = recover_rnn_and_cnn(mansave_dir, savename_network, data.numcell, data.numpixx, data.numpixy, FLAGS)
+rnn.cell.ground_truth = FLAGS.ground_truth == 'yes'
 '''
 simulate on the training set
 '''
-
-FLAGS.ground_truth = False
-inputnet, rnn = recover_rnn_and_cnn(mansave_dir, savename_network, data.numcell, data.numpixx, data.numpixy, FLAGS)
 gtact_train, predact_train, predfr_train, _ = forecast_on_gt(data, FLAGS, inputnet, rnn, train=True, eval=False)  # nrep, ncell, nframe
 
 np.save(savename_nogttrainresults, [predact_train, predfr_train])

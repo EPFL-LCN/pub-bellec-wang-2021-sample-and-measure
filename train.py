@@ -117,6 +117,7 @@ def run_training():
 	step = 0; steplist = []
 	# train batch 
 	lossbatchlist, loss_avgbatch, lossavgbatchlist = [], 0, []
+	lossavgbatchmin = 1e8
 	# validation
 	loss_eval, lossevallist = 0, []
 	lossevalmin = 1e8
@@ -148,26 +149,29 @@ def run_training():
 
 
 
-
-		# run on the whole evaluation dataset
-		input_for_rnn_eval = tf.repeat(tf.expand_dims(inputnet(xeval),axis=0),data.eval_numrep,axis=0) # batsize, nframe, input_latent_size
-		
-		y_batchrep_eval, pasty_batchrep_eval = data.yresponse_and_spikehistory__eval(data.eval_numrep, FLAGS.numconsframes, FLAGS.spike_delay)
-
-
-		loss_eval, loss_eval_gt, loss_eval_NC, loss_eval_psth, loss_eval_fr = RSNN.forward_pass(rnn, input_for_rnn_eval, y_batchrep_eval, pasty_batchrep_eval,
-                																FLAGS.ground_truth=='yes', FLAGS.weight_psth, FLAGS.weight_NC, FLAGS.weight_GT,
-                																FLAGS.weight_fr, hidden_output_neuron=FLAGS.hidden_output_neuron)
-
-
 		# a better model?
-		if loss_eval < lossevalmin: 
+		if loss_avgbatch < lossavgbatchmin: 
 
-			lossevalmin =  loss_eval 
+			lossavgbatchmin = loss_avgbatch
 
 
-			print('new save %d'%step)
-			network_save(variables, savename_network) #save the parameters of network		
+			# run on the whole evaluation dataset
+			input_for_rnn_eval = tf.repeat(tf.expand_dims(inputnet(xeval),axis=0),data.eval_numrep,axis=0) # batsize, nframe, input_latent_size
+			
+			y_batchrep_eval, pasty_batchrep_eval = data.yresponse_and_spikehistory__eval(data.eval_numrep, FLAGS.numconsframes, FLAGS.spike_delay)
+
+
+			loss_eval, loss_eval_gt, loss_eval_NC, loss_eval_psth, loss_eval_fr = RSNN.forward_pass(rnn, input_for_rnn_eval, y_batchrep_eval, pasty_batchrep_eval,
+	                																FLAGS.ground_truth=='yes', FLAGS.weight_psth, FLAGS.weight_NC, FLAGS.weight_GT,
+	                																FLAGS.weight_fr, hidden_output_neuron=FLAGS.hidden_output_neuron)
+
+			if loss_eval < lossevalmin:
+
+				lossevalmin =  loss_eval 
+
+
+				print('new save %d'%step)
+				network_save(variables, savename_network) #save the parameters of network		
 
 
 		# backward pass

@@ -24,6 +24,7 @@ def gen_parser():
     data.add_argument(
       '--numrep',
       type=int,
+      help='number of repetitions in the training set',
       default=80,
     )
     data.add_argument(
@@ -115,16 +116,19 @@ def gen_parser():
     snn.add_argument(
       '--hidden_output_neuron',
       type=int,
+      help='number of hidden neurons',
       default=0
     )
     data.add_argument(
       '--numconsframes',
       type=int,
+      help='Input tothe RSNN consists of # consecutive movie frames',
       default=10,
     )
     data.add_argument(
       '--spike_delay',
       type=int,
+      help='the recurrent weights consider spike history of last # frames',
       default=9,
     )
     snn.add_argument(
@@ -198,7 +202,8 @@ def gen_parser():
     cnn.add_argument(
       '--input_latent_size',
       type=int,
-      default=1568 # 23104/6080 allen # 1568 v1
+      help='the size of the flattened output of CNN',
+      default=1568 
     )
 
     return parser

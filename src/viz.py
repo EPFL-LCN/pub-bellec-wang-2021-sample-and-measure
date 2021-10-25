@@ -64,3 +64,47 @@ def mansavefig(avgbatchlist, evallist, step, savename_trainingcurve):
 	plt.savefig(savename_trainingcurve)
 	plt.close(figA)
 	
+def plot_NC_matrix(nc,ax, title, w_norm=None, colorbar=False):
+	# nc: one dim
+	if w_norm is None:
+		w_norm = np.percentile(np.abs(nc.flatten()),98)
+	nc_mat = np.zeros((69,69))
+	ttl = 0
+	for ci in range(69):
+		nc_mat[ci,:ci] = nc[ttl:ttl+ci]
+		ttl += ci
+
+	ax.set_aspect('equal')
+	imax = ax.pcolor(np.arange(nc_mat.shape[0]+1),np.arange(nc_mat.shape[1]+1),nc_mat,vmax=w_norm,vmin=0,cmap='Blues')
+
+	if colorbar:
+		divider = make_axes_locatable(ax)
+		cax = divider.append_axes("right", size="5%", pad=0.05)
+		plt.colorbar(imax, cax=cax)
+	ax.set_title(title)
+	ax.set_axis_off()
+
+def plot_connectivity_matrix(rw_,ax, title, w_norm=None,colorbar=False):
+	if w_norm is None:
+		w_norm = np.percentile(np.abs(rw_.flatten()),98)
+	ax.set_aspect('equal')
+	imax = ax.pcolor(np.arange(rw_.shape[0]+1),np.arange(rw_.shape[1]+1),rw_,vmax=w_norm,vmin=-w_norm,cmap='bwr')
+	if colorbar:
+		ax.set_xlabel('from neuron')
+		ax.set_ylabel('to neuron')
+		divider = make_axes_locatable(ax)
+		cax = divider.append_axes("right", size="5%", pad=0.05)
+		plt.colorbar(imax, cax=cax)
+	ax.set_title(title)
+	ax.set_axis_off()
+	return imax
+
+def R2(gt, pred):
+	# pred, gt as np array
+	# first gt, then pred
+	error = gt-pred
+	# error = error - np.mean(error)
+	dev = gt - np.mean(gt)
+	CoD = 1-np.sum(error**2)/np.sum(dev**2)
+	return CoD
+
