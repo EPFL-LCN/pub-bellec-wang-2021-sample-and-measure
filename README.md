@@ -37,6 +37,7 @@ One spike train recordings for training, saved in the form of numpy array with s
 And similarly, one video data + one spike train recordings for validating/ testing.
 
 You can either use your own dataset, or download the dataset we used (V1-dataset) from https://crcns.org/data-sets/vc/pvc-11/about.
+If you want to use V1-dataset, please follow the instructions of the website and refer to the pre-processing steps described in our paper.
 
 If you are testing a different dataset, you may also want to tailor the CNN that pre-processes the video according to the input.
 Once a different video or CNN is used, one have to specify the `input_latent_size`, it's the size of the flattened output of CNN, also the input size of the recurrent network.
