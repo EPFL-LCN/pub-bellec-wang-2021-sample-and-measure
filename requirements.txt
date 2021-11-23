@@ -1,8 +1,8 @@
 matplotlib==3.4.3
-numpy==1.19.5
+numpy==1.18.5
 six==1.15.0
 scikit-image==0.18.3
 pandas==1.1.5
 seaborn==0.11.2
 scipy==1.7.1
-tensorflow==2.6.0
+tensorflow==2.3.1
