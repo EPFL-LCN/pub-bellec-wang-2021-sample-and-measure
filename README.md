@@ -10,13 +10,17 @@ Accepted for publication at the NeurIPS conference 2021
 
 ## Environment
 
-`conda create -n rsnn_SM python=3.8`
-`conda activate rsnn_SM`
-`pip install -r requirements.txt`
+```
+conda create -n rsnn_SM python=3.8
+conda activate rsnn_SM
+pip install -r requirements.txt
+```
 
 ## Execution example
 
-`python train.py --SEED=0 --ground_truth=no  --GPU=yes --maxiter=800`
+```
+python train.py --SEED=0 --ground_truth=no  --GPU=yes --maxiter=800
+```
 
 
 `src.parser.py` specifies arguments used in the experiment.
