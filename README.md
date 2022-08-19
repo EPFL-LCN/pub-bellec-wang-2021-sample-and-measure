@@ -40,5 +40,5 @@ Once the `.npy` file generated, the `DataLoader` in `src.utils.py` handles the p
 
 #### Forcasting
 
-Once a model is trained, one can use `forcast.py` to simulate spike train samples. It should save generated spike trains and draw raster plots of the following type:
+Once a model is trained, one can use `forcast.py` to simulate spike train samples. It should save generated spike trains and draw raster plots as follows:
 ![raster plots](example_rasters.jpg "Raster plots")
