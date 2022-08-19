@@ -30,7 +30,8 @@ def recover_rnn_and_cnn(mansave_dir, savenetworkname,
 
 def forecast_on_gt(data, FLAGS,
 		inputnet, rnn,
-		train=True, eval=False,
+		train=True,
+		eval=False,
 		plot_hidden_neuron_spikes=True):
 	
 	input_delay, spike_delay = data.numconsframes, FLAGS.spike_delay
@@ -44,14 +45,13 @@ def forecast_on_gt(data, FLAGS,
 		nrep = data.train_numrep
 		predact = np.zeros((nrep, ncell, numtevolvetrain), dtype='bool')
 		predfr = np.zeros((nrep, ncell, numtevolvetrain))
-		gtact =  np.zeros((nrep, ncell, numtevolvetrain), dtype='bool')
+		gtact = np.zeros((nrep, ncell, numtevolvetrain), dtype='bool')
 	else:
 		x = data.xstimuli_eval()
 		nrep = data.eval_numrep
 		predact = np.zeros((nrep, ncell, numtevolveeval), dtype='bool')
 		predfr = np.zeros((nrep, ncell, numtevolveeval))
-		gtact =  np.zeros((nrep, ncell, numtevolveeval), dtype='bool')
-
+		gtact = np.zeros((nrep, ncell, numtevolveeval), dtype='bool')
 
 	if train:
 		y_batch, pasty_batch = data.yresponse_and_spikehistory__train(nrep, input_delay, spike_delay)
@@ -69,7 +69,6 @@ def forecast_on_gt(data, FLAGS,
 	gtact[:, :, :] = np.moveaxis(y_batch,1,-1).astype('bool')
 	predfr[:,:,:] = np.moveaxis(spike_probability[:,:,:ncell],-1,1)
 	predact[:,:,:] = np.moveaxis(z[:,:,:ncell],-1,1)
-
 
 	print(class_loss)
 	

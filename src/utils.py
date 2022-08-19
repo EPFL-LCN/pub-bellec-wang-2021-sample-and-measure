@@ -24,16 +24,14 @@ class DataLoader(object):
 		eval_activity = np.load(os.path.join(data_dir, eval_filename[1]))	# [#rep * #frames, #neurons]
 		eval_image = np.load(os.path.join(data_dir, eval_filename[0]))		# [#y, #x, #frames]
 
-
 		## parameters of data  
 		numconsframes = max(FLAGS.numconsframes, FLAGS.spike_delay+1)
 		numpixx, numpixy, train_numimg= train_image.shape # x is y on the image, y is x on the image
 		_, _, eval_numimg = eval_image.shape
 		numrep = int(train_activity.shape[0]/train_numimg)    
 		eval_numrep = int(eval_activity.shape[0]/eval_numimg)  
-		assert numrep == FLAGS.numrep
+		assert numrep == FLAGS.numrep, f"numrep: {numrep}, and FLAGS.numrep: {FLAGS.numrep}"
 		numcell = train_activity.shape[1]
-
 
 		numtrain = (train_numimg-numconsframes+1)*numrep
 		numeval = (eval_numimg-numconsframes+1)*numrep

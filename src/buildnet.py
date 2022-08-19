@@ -188,12 +188,9 @@ class RSNN(tf.keras.layers.Layer):
 
         def get_spike_from_inputs(): 
             return tf.concat([
-                        tf.reshape(inputs[:,self.num_inputs:], (-1, self.num_neurons, self.spike_delay)), 
-                                        # nbatch, ncell, spike_delay
-                        states[1][:,self.num_neurons:, :], 
-                                        # nbatch, hidden_output_neuron, spike_delay
-                    ], 1)
-                            # first output neurons, then hidden neurons
+                        tf.reshape(inputs[:,self.num_inputs:], (-1, self.num_neurons, self.spike_delay)), # nbatch, ncell, spike_delay
+                        states[1][:,self.num_neurons:, :], # nbatch, hidden_output_neuron, spike_delay
+                    ], 1) # first output neurons, then hidden neurons
         def get_spike_from_states(): 
             return states[1]
         
@@ -204,19 +201,13 @@ class RSNN(tf.keras.layers.Layer):
 
         w_rec = self.get_recurrent_weights()
         i_from_spike_buffer = tf.einsum("bit,jit->bj",spike_buffer, w_rec)
-      
-
 
         video_inputs = inputs[:,:self.num_inputs] # nbatch * num_inputs
 
-
         w_in = self.get_input_weights()
         i_from_in_buffer = tf.einsum("bi,ij->bj", video_inputs, w_in)
-      
-
 
         new_v = tf.nn.bias_add(tf.add(i_from_spike_buffer, i_from_in_buffer), self.bias)
-
 
         new_v_scaled = (new_v - self.thr) / self.thr
         new_z = SpikeFunction(new_v_scaled, self.dampening_factor, self.temperature_parameter)
