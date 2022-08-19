@@ -6,7 +6,7 @@ Guillaume Bellec*, Shuqi Wang*, Alireza Modirshanechi, Johanni Brea^, Wulfram Ge
 
 Accepted for publication at the NeurIPS conference 2021  
 (*= equal contributions, ^ = senior authors)  
-[arxiv](https://arxiv.org/abs/2106.10064)  
+[arxiv](https://arxiv.org/abs/2106.10064)  -  [NeurIPS proceedings](https://proceedings.neurips.cc/paper/2021/hash/9a32ff36c65e8ba30915a21b7bd76506-Abstract.html)
 
 ## Environment
 
