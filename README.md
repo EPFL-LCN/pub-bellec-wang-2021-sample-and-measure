@@ -13,6 +13,7 @@ Accepted for publication at the NeurIPS conference 2021
 ```
 conda create -n rsnn_SM python=3.8
 conda activate rsnn_SM
+conda install pip
 pip install -r requirements.txt
 ```
 
