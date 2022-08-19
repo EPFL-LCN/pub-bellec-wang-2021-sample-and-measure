@@ -30,17 +30,15 @@ The default parameters defined in `src.parser.py` should match the parameters us
 #### Dataset
 
 To reproduce the results on the V1-dataset, download it at: https://crcns.org/data-sets/vc/pvc-11/about.
-Please follow the instructions of the website and refer to the pre-processing steps described in the Appendix A of our paper.
+Then the instructions to pre-process the data and convert it from `.mat` to `.npy` as detailed in the notebook: `convert_data_to_npy.ipynb` or in the Appendix A of our paper.
 
 The processed data should be saved in the folder `data_dir` specified in `src.parser.py`.
 The video data should be saved as a numpy array of shape: ( #pixel_y, #pixel_x, #frame ).
-The spike train aligned to the video should be saved in the form of numpy array of shape: ( #repetition, #frame, #neuron).
-Similar video spike trains should be saved for validating/ testing.
-Then `DataLoader` in `src.utils.py` handles the preprocessing and the data loading.
-
-If you are using a different dataset with a different video resolution the output of the CNN is likely to be different.
-This should be specified using the parameter the `input_latent_size` which is the size of the flattened output of CNN.
+The spike train aligned to the video should be saved in the form of numpy array of shape: ( #repetition * #frame, #neuron).
+Similar video spike trains should be saved for validating testing sets, they correspond here to different repetitions of the same movie.
+Once the `.npy` file generated, the `DataLoader` in `src.utils.py` handles the preprocessing and the data.
 
 #### Forcasting
 
-Once a model is trained, one can use `forcast.py` to simulate spike train samples. 
+Once a model is trained, one can use `forcast.py` to simulate spike train samples. It should save generated spike trains and draw raster plots of the following type:
+![alt text](rasters.jpg "Raster plots")
